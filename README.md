@@ -1,55 +1,98 @@
 # Drift
 
-**See what quietly changed in your spending.**
+### See what quietly changed in your spending.
 
-Drift turns a bank-statement export into a private money changelog. It surfaces recurring charges, price increases, possible duplicates, and fees, then lets the user turn confirmed findings into a practical recovery plan.
+Drift transforms an ordinary bank statement into a private money changelog. It detects subscriptions that appeared, charges that increased, possible duplicate payments, and fees quietly reducing your balance—then turns confirmed findings into a practical recovery plan.
 
-## Why it matters
+**No account. No bank connection. No statement upload. Everything runs inside your browser.**
 
-Bank statements show transactions, not change. The costly details are usually buried across months: a subscription starts, a familiar charge rises, a payment appears twice, or small fees accumulate. Drift makes those changes visible in one focused workflow.
+## The problem
 
-## Product flow
+Bank statements record transactions, but they do not explain what changed.
 
-1. Drop a CSV or paste transaction rows.
-2. Confirm the automatically detected structure and currency.
-3. Review month-to-month changes with supporting transactions.
+A subscription begins unnoticed. A familiar charge becomes more expensive. The same payment appears twice. Small fees accumulate across the month.
+
+Most people only discover these changes after losing money for months.
+
+Drift makes them visible immediately.
+
+## What Drift finds
+
+| Detection | What it reveals |
+|---|---|
+| New recurring charges | Merchants that appeared in the latest month |
+| Price increases | Familiar charges that became more expensive |
+| Possible duplicates | Similar payments occurring unusually close together |
+| Accumulated fees | Transfer, service, maintenance, and processing fees |
+| Monthly drift | The total increase between the two analyzed periods |
+
+Every finding includes the supporting transactions and a confidence score. Drift flags patterns for review—it never falsely presents them as confirmed fraud.
+
+## How it works
+
+1. Drop a CSV statement or paste transaction rows.
+2. Drift automatically detects the columns and currency.
+3. Review a visual month-to-month money changelog.
 4. Mark each finding as expected, worth reviewing, or something to stop.
-5. Download a readable recovery plan.
+5. Download a readable action plan.
+6. Revisit previous analyses through private browser history.
 
 ## Privacy by design
 
-Statement parsing and analysis happen entirely in the browser. Transaction data is not uploaded or stored on a server. History is limited to compact analysis summaries saved in the same browser and can be cleared at any time.
+Drift analyzes statements entirely inside the browser.
 
-## Supported input
+- Transaction data is never uploaded.
+- No account or bank connection is required.
+- No external AI receives financial information.
+- Only compact analysis summaries are saved locally.
+- Saved history can be cleared at any time.
 
-- CSV files, including quoted cells
-- Pasted comma-separated rows
+This is not merely a privacy promise—the application has no statement-processing backend.
+
+## Why Drift is different
+
+Budgeting applications show where money went.
+
+Drift shows **what changed**.
+
+Instead of overwhelming users with charts and categories, it focuses on one urgent question:
+
+> “What started, increased, repeated, or quietly cost me more?”
+
+That makes the result understandable in seconds and actionable immediately.
+
+## Supported statements
+
+Drift accepts:
+
+- CSV files, including quoted fields
+- Pasted comma-separated transactions
 - Tab-separated bank exports
-- Markdown-style tables
-- Automatic removal of repeated headers and table separators
-- Automatic exclusion of pending, failed, declined, reversed, or cancelled rows when a status column exists
+- Markdown-style transaction tables
+- Statements containing repeated headers
+- Separate debit or signed-amount columns
 
-Drift automatically recognizes common date, merchant, amount, debit, and status column names. It detects NGN, USD, GBP, EUR, GHS, KES, and ZAR when currency information is present, otherwise it asks the user once.
+It automatically excludes pending, failed, declined, reversed, and cancelled transactions when status information is available.
 
-## Run locally
+Currency detection supports NGN, USD, GBP, EUR, GHS, KES, and ZAR.
 
-```bash
-npm start
-```
+## Technical design
 
-Open [http://localhost:3000](http://localhost:3000).
+Drift is a dependency-free browser application built with HTML, CSS, and JavaScript and served through a minimal Node.js server.
 
-## Verify
+Its detection engine is deterministic and explainable. Every result can be traced directly to the transactions that produced it.
 
-```bash
-npm run check
-npm test
-```
+```text
+Statement
+   ↓
+Local parsing and normalization
+   ↓
+Period and currency detection
+   ↓
+Change-detection engine
+   ↓
+Evidence-backed findings
+   ↓
+Personal recovery plan
 
-## Technical notes
 
-Drift is a dependency-free browser application served by a minimal Node.js static server. The detection system is deterministic and explainable: findings always include the transactions and comparison that produced them. Drift flags patterns, not fraud, and never claims to cancel a charge automatically.
-
-## License
-
-MIT
